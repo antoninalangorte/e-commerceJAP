@@ -17,7 +17,7 @@ function showProductsList(array) {
                                 <h4 class="mb-1">`+ product.name + `</h4>
                                 <small class="text-muted">` + product.soldCount + ` artículos vendidos</small>
                             </div>
-                            <p> ` + product.description + `</p>
+                            <p> ` + product.cost + `</p>
                         </div>
                     </div>
                 </div>
