@@ -10,33 +10,34 @@ function showProductsList(array) {
             <div class="list-group-item list-group-item-action">
                 <div class="row">
                     <div class="col-3">
-                        <img src="` + product.imgSrc + `" alt="` + product.name + `" class="img-thumbnail">
+                        <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
                 </div>
                         <div class="col">
                             <div class="d-flex w-100 justify-content-between">
-                                <h4 class="mb-1">`+ product.description + `</h4>
+                                <h4 class="mb-1">`+ product.name + `</h4>
                                 <small class="text-muted">` + product.soldCount + ` artículos vendidos</small>
                             </div>
-                            <p> Precio:` + product.cost + product.currency `</p>
+                            <p> ` + product.description + `</p>
                         </div>
                     </div>
                 </div>
                 `
 
 
-        document.getElementById("lista-productos").innerHTML = htmlContentToAppend;
+        document.getElementById("product").innerHTML = htmlContentToAppend;
     }
 }
+
+//Función que se ejecuta una vez que se haya lanzado el evento de
+//que el documento se encuentra cargado, es decir, se encuentran todos los
+//elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
     getJSONData(PRODUCTS_URL).then(function (resultObj) {
-        if (resultObj.status === "ok") {
+        if (resultObj.status === "ok") 
+        {
             categoriesArray = resultObj.data;
             //Muestro las categorías de los productos ordenadas
             showProductsList(categoriesArray);
         }
     });
 });
-
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
