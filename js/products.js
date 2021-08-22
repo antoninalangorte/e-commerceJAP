@@ -17,7 +17,8 @@ function showProductsList(array) {
                                 <h4 class="mb-1">`+ product.name + `</h4>
                                 <small class="text-muted">` + product.soldCount + ` artículos vendidos</small>
                             </div>
-                            <p> ` + product.cost + product.currency `</p>
+                            <p> ` + product.description + `</p>
+                            <p> ` + product.currency + "   " + product.cost + `</p>
                         </div>
                     </div>
                 </div>
@@ -27,10 +28,6 @@ function showProductsList(array) {
         document.getElementById("product").innerHTML = htmlContentToAppend;
     }
 }
-
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
     getJSONData(PRODUCTS_URL).then(function (resultObj) {
         if (resultObj.status === "ok") 
@@ -41,3 +38,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
     });
 });
+
+//Función que se ejecuta una vez que se haya lanzado el evento de
+//que el documento se encuentra cargado, es decir, se encuentran todos los
+//elementos HTML presentes.
