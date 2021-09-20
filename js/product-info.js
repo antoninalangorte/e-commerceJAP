@@ -104,6 +104,8 @@ document.getElementById("sendComment").addEventListener("click", function () {
 
     // Mostramos nuevamente los comentarios
     showProductComment(productComments);
+    
+    document.getElementById("form").reset();
 
 });
     
