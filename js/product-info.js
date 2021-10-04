@@ -1,8 +1,11 @@
+let allProducts = [];
 var product = {};
 var productComments = [];
 
 // En esta funcion se recibe un objeto producto para mostrarlo en pantalla
 function showProduct(product) {
+
+    // $('.carousel').carousel()
 
     let imagesProduct = "";
 
@@ -66,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
     getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
         if (resultObj.status === "ok") {
             productComments = resultObj.data;
+            setProducts();
         }
 
         // Se muestra el producto
@@ -108,4 +112,31 @@ document.getElementById("sendComment").addEventListener("click", function () {
     document.getElementById("form").reset();
 
 });
+
+//obtenemos los productos relacionados del json    
+function setProducts(){
+    getJSONData(PRODUCTS_URL).then(resultObj2 =>{
+        allProducts = resultObj2.data;
+
+    showRelatedProducts(product.relatedProducts);
+
+    })
+}
+
+//caracterticas del producto relacionado que queremos mostrar 
+
+function showRelatedProducts(array){
+    let html = ""
+    for (let position of array){
+        html += `<div class="card" style="width: 18rem;">
+        <img src="` + allProducts[position].imgSrc +`" class="card-img-top">
+        <div class="card-body">
+        <p class="card-title">` + allProducts[position].name + ` </p>
+        <p class="card-text">` + allProducts[position].description + `</p>
+        </div>
+       `
+    }
+
+   document.getElementById("relatedProducts").innerHTML = html;
+}
     
