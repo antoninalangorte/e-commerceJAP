@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
     getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
         if (resultObj.status === "ok") {
             product = resultObj.data;
+            setProducts();
         }
     });
 
@@ -69,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
     getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
         if (resultObj.status === "ok") {
             productComments = resultObj.data;
-            setProducts();
+            
         }
 
         // Se muestra el producto

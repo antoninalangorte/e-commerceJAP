@@ -12,22 +12,7 @@
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
 
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/dropzone.css" rel="stylesheet">
@@ -75,14 +60,103 @@
         </div>
       </ul>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 17/10/2021) y Entrega 7 (Fecha de entrega: 14/11/2021).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  
+  <div class="row" style="width: 75%; margin-left: auto; margin-right: auto; margin-top: 2%;">
+    <div class="col-md-12 tableCenter">
+      <table class="table table-borderer" id="cart-table" style= "width: auto; margin: auto;">
+        <thead class="table-primary">
+          <tr class="text-center">
+            <th>Imagen</th>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="tabla">
+        </tbody>
+      </table>
     </div>
-  </div>
+   
+    </div>
+  
+    <br>
+  
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title" style="text-align: center;">Ingresa tus datos:</h5>
+  
+    <form action="/action_page" style="padding-left: 10px;">
+      <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
+      <div class="invalid-feedback">Completa el campo "Nombre".</div>
+      <input type="text" class="form-control" id="apellido" placeholder="Apellido" required>
+      <div class="invalid-feedback">Completa el campo "Apellido".</div>
+      <br>
+      <h5 class="mb-3 text-center">Dirección:</h5>
+      <input type="text" class="form-control" id="calle" placeholder="Calle" required>
+      <div class="invalid-feedback">Completa el campo "Calle".</div>
+  
+      <input type="text" class="form-control" id="numero" placeholder="Número" required>
+      <div class="invalid-feedback">Completa el campo "Número".</div>
+  
+      <input type="text" class="form-control" id="esquina" placeholder="Esquina" required><br>
+      <div class="invalid-feedback">Completa el campo "Esquina".</div>
+  
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Factura de compra</h5>
+            <ul class="list-group list-group-flush text-left">
+              <div style="float:left;text-align:left">
+                <h6><strong>Tipo de envio:</strong></h6>
+                <input type="radio" name="envio" value="2" checked>Premium (2-5 días) - Costo del 15% sobre el subtotal.<br>
+                <input type="radio" name="envio" value="4">Express (5-8 días) - Costo del 7% sobre el subtotal.<br>
+                <input type="radio" name="envio" value="6">Standard (12 a 15 días) - Costo del 5% sobre el subtotal.<br><br>
+              </div>
+              
+              <li class="list-group-item">
+                <strong>Envío:</strong>
+                <p class="float-right">Gratis</p>
+                <span id="shippingCost"></span>
+              </li>
+              <li class="list-group-item">
+                <strong>Total: </strong>
+                
+                <span class="float-right">
+                  <strong>UYU</strong>
+                  <span id="sumaSubtotal" class="mb-3 text-center font-weight-bold">
+                    
+                  </span>
+                  
+                </span>
+              </li>
+            </ul>
+            <br><br>
+  
+            <button type="button" class="btn btn-primary" data-toggle="modal"
+              data-target=".bd-example-modal-lg">Confirmar pedido</button>
+        
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+              aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <p style="text-align: center;"> ¿Desea confirmar su pedido? </p>
+                        <p id="total"> </p>
+                  <input type="submit" class="btn btn-primary" value="Confirmar pedido">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
