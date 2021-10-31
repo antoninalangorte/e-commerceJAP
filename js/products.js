@@ -45,21 +45,20 @@ function showProductsList() {
 
 //href - al hacer click en cualquier producto te dirige a product-info
         htmlContentToAppend += `
-            <a href="product-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
-                </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h4 class="mb-1">`+ product.name + `</h4>
-                                <small class="text-muted">` + product.soldCount + ` artículos vendidos</small>
-                            </div>
-                            <p> ` + product.description + `</p>
-                            <p> ` + product.currency + "   " + product.cost + `</p>
-                        </div>
-                    </div>
-                </a>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+         <a href="product-info.html"> <img class="card-img-top" src="${product.imgSrc}"></a>
+         <br>
+         <h4 class="card-title"><strong><a href="product-info.html" class="text-danger stretched-link">${product.name}</a></strong></h4>
+          <div class="card-body">
+              <p class="card-text">${product.description} </p>
+              <div class="d-flex justify-content-between align-items-center">
+              <span class="badge badge-secondary">${product.currency} ${product.cost}</span>
+                <small class="text-muted">${product.soldCount} productos vendidos</small>
+              </div>
+            </div>
+          </div>
+        </div>
                 `
         document.getElementById("product").innerHTML = htmlContentToAppend;
     }

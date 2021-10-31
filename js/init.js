@@ -53,16 +53,8 @@ document.addEventListener("DOMContentLoaded", function(e){
   getAndShowUser();
 });
 
-//función para borrar los datos ingresados del usuario y llevar a index.html
-function eraseUser(){
-  let saveUser = localStorage.getItem("user");
- if(saveUser!=undefined && saveUser!=""){
-   localStorage.removeItem("user")
-   window.location.href = "index.html"
-
- }
-}
 
 document.getElementById("leave").addEventListener("click", function () {
-  eraseUser()
+  window.location.href = "index.html";
+      localStorage.clear();
 });
