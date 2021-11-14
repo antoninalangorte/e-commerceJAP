@@ -10,8 +10,10 @@ function updateProductSubtotal(id){
     	amount = 1;
     	document.getElementById(id).value = 1;
     }
-    document.getElementById("subtotal"+id).innerHTML = amount*cost;
+    document.getElementById("subtotal" + id).innerHTML = amount*cost;
     sumaSubtotales();
+    modificarTotal();
+    updateTotalCosts();
 }
 
 
@@ -65,6 +67,7 @@ function sumaSubtotales(){
     }
 
     document.getElementById("sumaSubtotal").innerHTML = subtotal;
+    updateTotalCosts();
 }
 
 //cÁlculo que se hace para pasar de USD a UYU en este caso
@@ -84,6 +87,153 @@ function getCarrito(url){
     
 }
 
+//modifica el valor del costo total 
+function modificarTotal() {
+    document.getElementById("total").innerHTML = `Total (${moneda})`;
+    document.getElementById("costoTotal").innerHTML = `<b>${parseFloat(document.getElementById("sumaSubtotal").innerHTML) +
+        parseFloat(document.getElementById("costoEnvio").innerHTML)}</b>`;
+}
+
+//cálculo del porcentaje del costo de envío, dependiendo del envío elegido
+
+comissionPercentage = 0;
+document.getElementById("premium").addEventListener("change", function(){
+    comissionPercentage = 0.15;
+    updateTotalCosts();
+});
+
+document.getElementById("express").addEventListener("change", function(){
+    comissionPercentage = 0.07;
+    updateTotalCosts();
+});
+
+document.getElementById("standard").addEventListener("change", function(){
+    comissionPercentage = 0.05;
+    updateTotalCosts();
+});
+
+//Función que se utiliza para actualizar los costos de publicación
+function updateTotalCosts(){
+    let subtotal = parseFloat(document.getElementById("sumaSubtotal").innerHTML);
+    
+    let costoEnvio = subtotal * comissionPercentage;
+    document.getElementById("costoEnvio").innerHTML = costoEnvio;
+
+    let total =  subtotal +  costoEnvio;
+    document.getElementById("costoTotal").innerHTML = total;
+}
+
+
+//función que guarda los datos que se escriben en el formulario, y los datos a mostrar 
+function guardarDatosEnvio() {
+    var datosEnvio = "";
+    var nombre = document.getElementById("inputNombre").value;
+    var apellido = document.getElementById("inputApellido").value;
+    var calle = document.getElementById("inputCalle").value;
+    var número = document.getElementById("inputNumero").value;
+    var departamento = document.getElementById("inputDepartamento").value;
+  
+    datosEnvio = `<strong>Nombre:</strong>`+" "+ nombre +" "+ apellido + " " + `<strong>Dirección:</strong>`+ " " + calle + " " + número + " " + "-" + " " + departamento;
+     
+    localStorage.setItem('datosEnvios',datosEnvio);
+  }
+  
+
+  //función que guarda los datos ingresados de la tarjeta
+  function guardarDatosTarjeta() {
+    var datosTarjeta = "";
+  
+    datosTarjeta = `<strong>Forma de pago:</strong>` + " " + "Tarjeta";
+    localStorage.setItem('datosPago',datosTarjeta);
+  
+  }
+
+  //guarda los datos ingresados de la cuenta bancaria 
+  
+  function guardarDatosTransf() {
+    var datosTransf = "";
+  
+    datosTransf = `<strong>Forma de pago:</strong>` + " " + "Transferencia";
+    localStorage.setItem('datosPago',datosTransf);
+  }
+
+  // Función para activar botón de modal de transferencia bancaria
+function activarBoton(okCheckBox) {
+    
+    if(okCheckBox.checked){
+        document.getElementById("botonAceptarTransf").disabled = false;
+    }
+    else{
+        document.getElementById("botonAceptarTransf").disabled = true;
+    }
+}
+
+ // Mostrar datos de envio y pago en div de resumen
+ let datosEnvio = localStorage.getItem('datosEnvios');
+ let datosPago = localStorage.getItem('datosPago')
+
+ if (datosEnvio != null) {
+ document.getElementById("infoEnvio").innerHTML = datosEnvio;
+}
+
+if (datosPago != null) {
+ document.getElementById("infoPago").innerHTML = datosPago;
+}
+
+// Función que larga las diferentes alertas al darle a finalizar compra, dependiendo de los formularios completos 
+document.getElementById('finalizarCompra').addEventListener('click', function (e) {
+    let envioGuardado = document.getElementById('infoEnvio').innerHTML;
+    let pagoGuardado = document.getElementById('infoPago').innerHTML;
+    
+    if (envioGuardado != "" && pagoGuardado != "") {
+      
+      swal({
+        title: "¡Felicidades!",
+        text: "¡Que disfrutes tu compra!",
+        icon: "success",
+        buttons: ["Volver a inicio", "Cerrar sesión"],
+      dangerMode: true,
+    })
+    .then((cerrarSesion) => {
+      if (cerrarSesion) {
+        window.location.href = "index.html";
+        localStorage.clear();
+        
+      } else {
+        window.location = "portada.html";
+        
+      }
+    });
+    }
+    
+    
+    if (envioGuardado == "" && pagoGuardado != "") {
+      swal(
+        "¡No tan rápido!",
+        "Te olvidaste de ingresar tu información de envío",
+        "error"
+      );
+    }
+    
+    if (envioGuardado != "" && pagoGuardado == "") {
+      swal(
+        "¡No tan rápido!",
+        "Te olvidaste de seleccionar un método de pago",
+        "error"
+      );
+    }
+
+    if (envioGuardado == "" && pagoGuardado == "") {
+        swal(
+          "¡No tan rápido!",
+          "Selecciona un método de pago e ingresa tu información de envío",
+          "error"
+        );
+      }
+  
+    
+    });
+    
 document.addEventListener("DOMContentLoaded", function(e){
     getCarrito("https://japdevdep.github.io/ecommerce-api/cart/654.json")
     .then(respuesta=>{
